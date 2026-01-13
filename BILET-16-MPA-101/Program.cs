@@ -1,0 +1,34 @@
+using BILET_16_MPA_101.Contexts;
+using Microsoft.EntityFrameworkCore;
+
+namespace BILET_16_MPA_101
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+            });
+
+            var app = builder.Build();
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
+            app.UseAuthorization();
+
+            app.MapControllerRoute(
+                  name: "areas",
+                  pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+      
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.Run();
+        }
+    }
+}
