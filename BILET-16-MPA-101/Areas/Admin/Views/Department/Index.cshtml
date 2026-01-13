@@ -1,30 +1,41 @@
-﻿<table class="table">
-    <thead class="table-dark">
-        <tr>
-            <th scope="col">Department</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td></td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td></td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
+﻿@using BILET_16_MPA_101.ViewModels
+@model List<DepartmentGetVM>
+
+<div class="container mt-4">
+
+    <div class="row mb-3">
+        <div class="col-2">
+            <a class="btn btn-success" asp-action="Create">Create Department</a>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Department Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var department in Model)
+            {
+                <tr>
+                    <th scope="row">@department.Id</th>
+                    <td>@department.Name</td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@department.Id" class="btn btn-warning btn-sm">Update</a>
+
+                        <form asp-action="Delete" asp-route-id="@department.Id" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure you want to delete this department?');">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
